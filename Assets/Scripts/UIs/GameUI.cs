@@ -1,81 +1,54 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class GameUI : MonoBehaviour
+namespace DoublePendulumProject.UI 
 {
-    [Header("GENERAL UI")]
-    public PendulumUI pendulumUI;
 
-    [Header("PLAY / PAUSED STATE")]
-    public GameObject playState;
+    using Modules;
 
-    [Header("CONTROLS")]
-    private Dictionary<string,GameObject> controls;
+    /// <summary>
+    /// Game UI class will target UI elements that are not part of the pendulums (play/pause buttons, menus, interactions between UIs, etc...) 
+    /// </summary>
+    public class GameUI : MonoBehaviour
+    {
+        [Header("MODULES")]
+        public PlayStateUI playStateUI;
+        public ControlsUI controlsUI;
+        public InfoUI infoUI;
+        public MenuUI menuUI;
+        public TabsUI tabsUI;
 
-    #region UNITY METHODS
-    private void Awake() {
-        Init();
-    }
-    #endregion
+        #region UNITY METHODS
+        private void Awake() {
+            // We intialize the object
+            Init();
+        }
 
-    private void Init() {
-        // PLAY / PAUSED state
-        playState.SetActive(true);
-        playState.GetComponent<TextMeshProUGUI>().text = string.Format("<b>PAUSED</b>");
-    
-        // CONTROLS
-        controls = new Dictionary<string, GameObject>();
-        Transform t = GameObject.Find("Controls").transform;
-        controls.Add("Resume", t.Find("[Space] Resume").gameObject);
-        controls.Add("Pause", t.Find("[Space] Pause").gameObject);
-        controls.Add("Edit", t.Find("[E] Edit").gameObject);
-        controls.Add("Features", t.Find("[H] Features").gameObject);
-        controls.Add("Info", t.Find("[I] Info").gameObject);
-        // We set all the controls to not show when the starting message is displayed (at launch)
-        controls["Resume"].SetActive(false);
-        controls["Pause"].SetActive(false);
-        controls["Edit"].SetActive(false);
-        controls["Features"].SetActive(false);
-        controls["Info"].SetActive(false);
-        // We hide the play state UI
-        playState.SetActive(false);
-        // We hide the pendulum UI
-        pendulumUI.HideTabs();
-    }
+        private void Update() {
+            // H: HELP Panel
+            if (Input.GetKeyDown(KeyCode.H)) {
+                controlsUI.obj.SetActive(!controlsUI.obj.activeSelf);
+            }
+        }
+        #endregion
 
-    public void OnStateSwitch() {
-        // PLAY / PAUSED State
-        playState.GetComponent<TextMeshProUGUI>().text = string.Format("<b>{0}</b>", GameManager.state.ToString());
+        public void Init() {
+            // We fetch the UI elements in the scene in case there are NULL
+            if (playStateUI == null) { playStateUI = this.transform.Find("_PlayStateUI").GetComponent<PlayStateUI>(); }
+            if (controlsUI == null) { controlsUI = this.transform.Find("_ControlsUI").GetComponent<ControlsUI>(); }
+            if (infoUI == null) { infoUI = this.transform.Find("_InfoUI").GetComponent<InfoUI>(); }
+            if (menuUI == null) { menuUI = this.transform.Find("_MenuUI").GetComponent<MenuUI>(); }
+            if (tabsUI == null) { tabsUI = this.transform.Find("_TabsUI").GetComponent<TabsUI>(); }
+        }
 
-        switch (GameManager.state) {
-            case GameState.PLAY:
-                controls["Resume"].SetActive(false);
-                controls["Pause"].SetActive(true);
-                controls["Edit"].SetActive(false);
-                controls["Features"].SetActive(false);
-                controls["Info"].SetActive(true);
-                pendulumUI.HideTabs();
-            break;
-
-            case GameState.PAUSED:
-                controls["Resume"].SetActive(true);
-                controls["Pause"].SetActive(false);
-                controls["Edit"].SetActive(true);
-                controls["Features"].SetActive(true);
-                controls["Info"].SetActive(true);
-                pendulumUI.ShowTabs();
-            break;
-
-            case GameState.FROZEN:
-                controls["Resume"].SetActive(false);
-                controls["Pause"].SetActive(false);
-                controls["Edit"].SetActive(false);
-                controls["Features"].SetActive(false);
-                controls["Info"].SetActive(false);
-                pendulumUI.HideTabs();
-            break;
+        public void OnStateSwitch() {
+            playStateUI.OnStateSwitch();
+            controlsUI.OnStateSwitch();
+            infoUI.OnStateSwitch();
+            menuUI.OnStateSwitch();
+            tabsUI.OnStateSwitch();
         }
     }
+
 }
