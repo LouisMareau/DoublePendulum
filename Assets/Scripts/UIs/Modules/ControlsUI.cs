@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 namespace DoublePendulumProject.UI.Modules
 {
@@ -20,6 +21,11 @@ namespace DoublePendulumProject.UI.Modules
         public GameObject obj;
 
         /// <summary>
+        /// The text field (TextMeshProUGUI) displaying the the list of currently available controls.
+        /// </summary>
+        public TextMeshProUGUI field;
+
+        /// <summary>
         /// A list (Dictionary) of all the controls. Use controls["key"] to access the value associated to that key (ex: controls["Add"] will give "Press [ A ] to add a double pendulum with default settings.")
         /// </summary>
         public Dictionary<string, string> controls;
@@ -37,6 +43,8 @@ namespace DoublePendulumProject.UI.Modules
         public void Init() {
             // We check if the obj is NULL (in which case, we make sure we have a reference to the root object)
             if (obj == null) { obj = GameObject.Find("_CONTROLS"); }
+            // We define the TMPro field
+            field = obj.GetComponentInChildren<TextMeshProUGUI>();
 
             // We intialize the dictionary
             controls = new Dictionary<string, string>();
@@ -87,16 +95,45 @@ namespace DoublePendulumProject.UI.Modules
 
         public void OnPlay() {
             // We concatenate all the strings into a well structured list
-            string s = CreateString(controls["Play/Pause"], controls["Info"], controls["Menu"]);
+            string[] s = {
+                controls["Play/Pause"],
+                controls["Info"],
+                controls["Menu"]
+            };
+            field.text = CreateString(s);
         }
 
         public void OnEdit() {
             // We concatenate all the strings into a well structured list
+            string[] s = {
+                controls["Play/Pause"],
+                controls["Edit"],
+                controls["Add"],
+                controls["Clone"],
+                controls["Info"],
+                controls["Menu"]
+            };
+            field.text = CreateString(s);
         }
 
         public void OnPause() {
             // We concatenate all the strings into a well structured list
-            string s = CreateString(controls["Play/Pause"], controls["Info"], controls["Menu"]);
+            string[] s = {
+                controls["Play/Pause"],
+                controls["Edit"],
+                controls["Add"],
+                controls["Clone"],
+                controls["Info"],
+                controls["Menu"],
+                controls["Mass+"],
+                controls["Mass-"],
+                controls["Mass++"],
+                controls["Mass--"],
+                controls["Mass+++"],
+                controls["Mass---"],
+                controls["FreeMove"]
+            };
+            field.text = CreateString(s);
         }
         
         private string CreateString(params string[] args) {
