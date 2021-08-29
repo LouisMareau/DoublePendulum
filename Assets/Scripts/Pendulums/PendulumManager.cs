@@ -98,11 +98,8 @@ namespace DoublePendulumProject.Gameplay
 
             // We check for info
             if (UI.info.gameObject.activeSelf) {
-                if (isEdit) {
-                    UI.info.UpdateInfo(UI.selectedSinglePendulum);
-                } else {
-                    UI.info.UpdateInfo((Pendulum)selectedDoublePendulum.GetComponent<DoublePendulum>().pendulumB);
-                }
+                DoublePendulum selected = selectedDoublePendulum.GetComponent<DoublePendulum>();
+                UI.info.UpdateInfo(selected);
             }
         }
         #endregion

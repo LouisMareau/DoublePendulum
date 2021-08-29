@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -9,17 +7,29 @@ namespace DoublePendulumProject.UI
 
     public class PendulumUIInfo : MonoBehaviour
     {
-        [Header("VALUES")]
-        public TextMeshProUGUI length;
-        public TextMeshProUGUI mass;
-        public TextMeshProUGUI angle;
-        public TextMeshProUGUI velocity;
+        [Header("PENDULUM A VALUES")]
+        public TextMeshProUGUI lengthA;
+        public TextMeshProUGUI massA;
+        public TextMeshProUGUI angleA;
+        public TextMeshProUGUI velocityA;
 
-        public void UpdateInfo(Pendulum selectedPendulum) {
-            this.length.text = selectedPendulum.length.ToString();
-            this.mass.text = selectedPendulum.mass.ToString();
-            this.angle.text = selectedPendulum.angle.ToString();
-            this.velocity.text = selectedPendulum.velocity.ToString();
+        [Header("PENDULUM B VALUES")]
+        public TextMeshProUGUI lengthB;
+        public TextMeshProUGUI massB;
+        public TextMeshProUGUI angleB;
+        public TextMeshProUGUI velocityB;
+
+        public void UpdateInfo(DoublePendulum selectedPendulum) {
+            // PENDULUM A values assignement
+            this.lengthA.text = selectedPendulum.pendulumA.length.ToString();
+            this.massA.text = selectedPendulum.pendulumA.mass.ToString();
+            this.angleB.text = selectedPendulum.pendulumA.angle.ToString();
+            this.velocityB.text = selectedPendulum.pendulumA.velocity.ToString();
+            // PENDULUM B values assignement
+            this.lengthB.text = selectedPendulum.pendulumB.length.ToString();
+            this.massB.text = selectedPendulum.pendulumB.mass.ToString();
+            this.angleB.text = selectedPendulum.pendulumB.mass.ToString();
+            this.velocityB.text = selectedPendulum.pendulumB.velocity.ToString();
         }
     }
 
