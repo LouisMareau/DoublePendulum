@@ -47,11 +47,6 @@ namespace DoublePendulumProject.Gameplay
         }
 
         private void Update() {
-            // We can show infos at any time if the user pressed the "I" key (Paused simulation or not)
-            if (Input.GetKeyDown(KeyCode.I)) {
-                UI.ToggleInfo();
-            }
-
             if (GameManager.state == GameState.PAUSED) {
                 // When the user presses the "E" key while the simulation is PAUSED, we toggle 'isEdit' and pass the first pendulum in Edit mode (only one pendulum can be in Edit mode at the same time) if isEdit equals TRUE
                 if (Input.GetKeyDown(KeyCode.E)) {

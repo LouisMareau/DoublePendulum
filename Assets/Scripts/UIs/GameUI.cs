@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 namespace DoublePendulumProject.UI 
 {
@@ -29,6 +27,16 @@ namespace DoublePendulumProject.UI
             // H: HELP Panel
             if (Input.GetKeyDown(KeyCode.H)) {
                 controlsUI.obj.SetActive(!controlsUI.obj.activeSelf);
+            }
+
+            // I: INFO Panel
+            if (Input.GetKeyDown(KeyCode.I)) {
+                infoUI.obj.SetActive(!infoUI.obj.activeSelf);
+            }
+
+            // ESC: MENU Panel
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                menuUI.obj.SetActive(!menuUI.obj.activeSelf);
             }
         }
         #endregion

@@ -23,8 +23,8 @@ namespace DoublePendulumProject.UI
             // PENDULUM A values assignement
             this.lengthA.text = selectedPendulum.pendulumA.length.ToString();
             this.massA.text = selectedPendulum.pendulumA.mass.ToString();
-            this.angleB.text = selectedPendulum.pendulumA.angle.ToString();
-            this.velocityB.text = selectedPendulum.pendulumA.velocity.ToString();
+            this.angleA.text = selectedPendulum.pendulumA.angle.ToString();
+            this.velocityA.text = selectedPendulum.pendulumA.velocity.ToString();
             // PENDULUM B values assignement
             this.lengthB.text = selectedPendulum.pendulumB.length.ToString();
             this.massB.text = selectedPendulum.pendulumB.mass.ToString();

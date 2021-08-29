@@ -52,8 +52,6 @@ namespace DoublePendulumProject.UI
             Init();
             // We hide all tabs at launch
             DeactivateTabs();
-            // We hide the info at launch
-            HideInfo();
         }
         #endregion
 
@@ -169,12 +167,6 @@ namespace DoublePendulumProject.UI
 
         public void ToggleRemoveButtons() { isRemoveBtnActive = !isRemoveBtnActive; }
         #endregion
-        #endregion
-
-        #region INFO
-        public void HideInfo() { info.gameObject.SetActive(false); }
-        public void ShowInfo() { info.gameObject.SetActive(true); }
-        public void ToggleInfo() { info.gameObject.SetActive(!info.gameObject.activeSelf); }
         #endregion
     }
 

@@ -20,6 +20,16 @@ namespace DoublePendulumProject.UI.Modules
         public GameObject obj;
 
         /// <summary>
+        /// Reference to the Pendulum Manager.
+        /// </summary>
+        private PendulumManager pendulumManager;
+
+        /// <summary>
+        /// Reference to the currently selected double pendulum.
+        /// </summary>
+        private DoublePendulum selectedDoublePendulum;
+
+        /// <summary>
         /// Reference to the PendulumA fields (TextMeshPro fields).
         /// </summary>
         private Dictionary<string, TextMeshProUGUI> fieldsA;
@@ -38,6 +48,9 @@ namespace DoublePendulumProject.UI.Modules
         public void Init() {
             // We check if the obj is NULL (in which case, we make sure we have a reference to the root object)
             if (obj == null) { obj = GameObject.Find("_INFO"); }
+
+            if (pendulumManager == null) { pendulumManager = GameObject.Find("_Managers").transform.Find("Pendulum Manager").GetComponent<PendulumManager>(); }
+            if (selectedDoublePendulum == null) { selectedDoublePendulum = pendulumManager.selectedDoublePendulum.GetComponent<DoublePendulum>(); }
 
             // We define both dictionaries
             fieldsA = new Dictionary<string, TextMeshProUGUI>();
@@ -66,7 +79,20 @@ namespace DoublePendulumProject.UI.Modules
         #region UPDATE
 
         private void Update() {
-            
+            UpdateInfo();
+        }
+
+        private void UpdateInfo() {
+            // Update fields A fields
+            fieldsA["length"].text = selectedDoublePendulum.pendulumA.length.ToString();
+            fieldsA["mass"].text = selectedDoublePendulum.pendulumA.mass.ToString();
+            fieldsA["angle"].text = selectedDoublePendulum.pendulumA.angle.ToString();
+            fieldsA["velocity"].text = selectedDoublePendulum.pendulumA.velocity.ToString();
+            // Update fields B fields
+            fieldsB["length"].text = selectedDoublePendulum.pendulumB.length.ToString();
+            fieldsB["mass"].text = selectedDoublePendulum.pendulumB.mass.ToString();
+            fieldsB["angle"].text = selectedDoublePendulum.pendulumB.angle.ToString();
+            fieldsB["velocity"].text = selectedDoublePendulum.pendulumB.velocity.ToString();
         }
 
         #endregion
@@ -77,7 +103,7 @@ namespace DoublePendulumProject.UI.Modules
         /// Define what is happening when the game state changes (INACTIVE => PAUSED/EDIT <=> PLAY)
         /// </summary>
         public void OnStateSwitch() {
-
+            
         }
 
         public void OnPlay() {
