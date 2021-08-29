@@ -35,8 +35,6 @@ namespace DoublePendulumProject.UI.Modules
         public void Init() {
             // We check if the obj is NULL (in which case, we make sure we have a reference to the root object)
             if (obj == null) { obj = GameObject.Find("_PLAYSTATE"); }
-            // We define the TMPro field
-            field = obj.GetComponent<TextMeshProUGUI>();
         }
 
         /// <summary>

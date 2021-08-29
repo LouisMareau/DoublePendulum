@@ -1,4 +1,7 @@
 Library/
 Gifs/
+GUI/
 
 Unity*
+
+*.meta

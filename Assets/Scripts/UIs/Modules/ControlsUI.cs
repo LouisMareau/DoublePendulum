@@ -26,9 +26,9 @@ namespace DoublePendulumProject.UI.Modules
         public TextMeshProUGUI field;
 
         /// <summary>
-        /// A list (Dictionary) of all the controls. Use controls["key"] to access the value associated to that key (ex: controls["Add"] will give "Press [ A ] to add a double pendulum with default settings.")
+        /// A list (Dictionary) of all the controls. Use controls["key"] to access the game object associated to that key (ex: controls["Add"] will give the GameObject)
         /// </summary>
-        public Dictionary<string, string> controls;
+        public Dictionary<string, GameObject> controls;
 
         #region UNITY METHODS
         private void Awake() {
@@ -47,27 +47,28 @@ namespace DoublePendulumProject.UI.Modules
             field = obj.GetComponentInChildren<TextMeshProUGUI>();
 
             // We intialize the dictionary
-            controls = new Dictionary<string, string>();
+            controls = new Dictionary<string, GameObject>();
             SetControls();
         }
 
         private void SetControls() {
+            // We find the list in the hierarchy
+            Transform list = obj.transform.Find("List");
             // We set up all the controls
-            controls.Add("Play/Pause", "Press <b>[ Space ]</b> to switch between the modes PLAY and PAUSED.");
-            controls.Add("Edit", "Press <b>[ E ]</b> while in PAUSED mode to toggle the EDIT mode.");
-            controls.Add("Add", "Press <b>[ A ]</b> to add a double pendulum with default settings.");
-            controls.Add("Clone", "Press <b>[ C ]</b> to clone the currently selected double pendulum (keeping the same values as the original).");
-            controls.Add("Help", "Press <b>[ H ]</b> to open the help panel, for a list of all the controls and shortcuts available.");
-            controls.Add("Info", "Press <b>[ I ]</b> to open the information panel.");
-            controls.Add("Menu", "Press <b>[ Esc ]</b> to open the main menu.");
-            controls.Add("Mass+", "Slide <b>[ Mouse Scroll ]</b> forward to increase the mass by 0.001 unit.");
-            controls.Add("Mass-", "Slide <b>[ Mouse Scroll ]</b> backward to decrease the mass by 0.00i unit.");
-            controls.Add("Mass++", "Press <b>[ Left Shift ]</b> and slide <b>[ Mouse scroll ]</b> forward to increase the mass by 0.01 unit.");
-            controls.Add("Mass--", "Press <b>[ Left Shift ]</b> and slide <b>[ Mouse scroll ]</b> backward to decrease the mass by 0.01 unit.");
-            controls.Add("Mass+++", "Press <b>[ Left Shift ]</b> + <b>[ Left Ctrl ]</b> and slide <b>[ Mouse scroll ]</b> forward to increase the mass by 0.1 unit.");
-            controls.Add("Mass---", "Press <b>[ Left Shift ]</b> + <b>[ Left Ctrl ]</b> and slide <b>[ Mouse scroll ]</b> backward to increase the mass by 0.1 unit.");
-            controls.Add("FreeMove", "Press <b>[ Mouse Left ]</b> to drag around the masses.");
-            //* WRITE MORE HERE !
+            controls.Add("Edit", list.Find("E").gameObject);
+            controls.Add("Add", list.Find("A").gameObject);
+            controls.Add("Clone", list.Find("C").gameObject);
+            controls.Add("Help", list.Find("H").gameObject);
+            controls.Add("Info", list.Find("I").gameObject);
+            controls.Add("Menu", list.Find("Esc").gameObject);
+            controls.Add("Mass+", list.Find("Mass+").gameObject);
+            controls.Add("Mass-", list.Find("Mass++").gameObject);
+            controls.Add("Mass++", list.Find("Mass+++").gameObject);
+            controls.Add("Mass--", list.Find("Mass-").gameObject);
+            controls.Add("Mass+++", list.Find("Mass--").gameObject);
+            controls.Add("Mass---", list.Find("Mass---").gameObject);
+            controls.Add("FreeMove", list.Find("FreeMove").gameObject);
+            //* WRITE MORE HERE (... if needed) !
         }
 
         /// <summary>
@@ -95,7 +96,7 @@ namespace DoublePendulumProject.UI.Modules
 
         public void OnPlay() {
             // We concatenate all the strings into a well structured list
-            string[] s = {
+            GameObject[] s = {
                 controls["Play/Pause"],
                 controls["Info"],
                 controls["Menu"]
@@ -105,7 +106,7 @@ namespace DoublePendulumProject.UI.Modules
 
         public void OnEdit() {
             // We concatenate all the strings into a well structured list
-            string[] s = {
+            GameObject[] s = {
                 controls["Play/Pause"],
                 controls["Edit"],
                 controls["Add"],
@@ -118,7 +119,7 @@ namespace DoublePendulumProject.UI.Modules
 
         public void OnPause() {
             // We concatenate all the strings into a well structured list
-            string[] s = {
+            GameObject[] s = {
                 controls["Play/Pause"],
                 controls["Edit"],
                 controls["Add"],
@@ -136,11 +137,11 @@ namespace DoublePendulumProject.UI.Modules
             field.text = CreateString(s);
         }
         
-        private string CreateString(params string[] args) {
+        private string CreateString(params GameObject[] args) {
             // We initialize an empty string
             string s = string.Empty;
             
-            foreach (string arg in args) {
+            foreach (GameObject arg in args) {
                 s += arg + "\n";
             }
 
