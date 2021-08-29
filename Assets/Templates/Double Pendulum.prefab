@@ -307,7 +307,7 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   manager: {fileID: 0}
   doublePendulum: {fileID: 7745818229709832364}
-  massIncrement: 0.01
+  massIncrement: 0.0001
 --- !u!1 &7745818230418159873
 GameObject:
   m_ObjectHideFlags: 0
@@ -641,7 +641,7 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   manager: {fileID: 0}
   doublePendulum: {fileID: 7745818229709832364}
-  massIncrement: 0.01
+  massIncrement: 0.0001
 --- !u!1 &7745818231087527793
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,10 +13,21 @@ namespace DoublePendulumProject.UI.Modules
     public class InfoUI : MonoBehaviour, IModuleUI
     {
         /// <summary>
-        /// The root game object associated with this UI element
+        /// The root game object associated with this UI element.
         /// </summary>
         [Header("CORE")]
         public GameObject obj;
+
+        /// <summary>
+        /// Reference to the PendulumA game object.
+        /// </summary>
+        public GameObject pendulumAObj;
+
+        /// <summary>
+        /// Reference to the PendulumB gameObject.
+        /// </summary>
+        public GameObject pendulumBObj;
+
 
         #region UNITY METHODS
         private void Awake() {

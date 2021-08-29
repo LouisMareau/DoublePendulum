@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace DoublePendulumProject.Gameplay 
 {
@@ -65,16 +63,16 @@ namespace DoublePendulumProject.Gameplay
             if (GameManager.state == GameState.PAUSED) {
                 if (Input.GetAxis("Mouse ScrollWheel") > 0) {
                     if (Input.GetKey(KeyCode.LeftShift)) {
-                        if (Input.GetKey(KeyCode.LeftAlt)) { pendulum.mass += massIncrement * 100f; }
-                        else { pendulum.mass += massIncrement * 10f; }
+                        if (Input.GetKey(KeyCode.LeftControl)) { pendulum.mass += massIncrement * 10000f; }
+                        else { pendulum.mass += massIncrement * 100f; }
                     }
                     else { pendulum.mass += massIncrement; }
                     pendulum.UpdateScale();
                 }
                 if (Input.GetAxis("Mouse ScrollWheel") < 0) {
                     if (Input.GetKey(KeyCode.LeftShift)) { 
-                        if (Input.GetKey(KeyCode.LeftAlt)) { pendulum.mass -= massIncrement * 100f; }
-                        else { pendulum.mass -= massIncrement * 10f; } 
+                        if (Input.GetKey(KeyCode.LeftControl)) { pendulum.mass -= massIncrement * 10000f; }
+                        else { pendulum.mass -= massIncrement * 100f; } 
                     }
                     else { pendulum.mass -= massIncrement; }
                     pendulum.UpdateScale();

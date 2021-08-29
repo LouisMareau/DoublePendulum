@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -21,11 +20,6 @@ namespace DoublePendulumProject.UI.Modules
         public GameObject obj;
 
         /// <summary>
-        /// The text field (TextMeshProUGUI) displaying the the list of currently available controls.
-        /// </summary>
-        public TextMeshProUGUI field;
-
-        /// <summary>
         /// A list (Dictionary) of all the controls. Use controls["key"] to access the game object associated to that key (ex: controls["Add"] will give the GameObject)
         /// </summary>
         public Dictionary<string, GameObject> controls;
@@ -43,8 +37,6 @@ namespace DoublePendulumProject.UI.Modules
         public void Init() {
             // We check if the obj is NULL (in which case, we make sure we have a reference to the root object)
             if (obj == null) { obj = GameObject.Find("_CONTROLS"); }
-            // We define the TMPro field
-            field = obj.GetComponentInChildren<TextMeshProUGUI>();
 
             // We intialize the dictionary
             controls = new Dictionary<string, GameObject>();
@@ -55,6 +47,7 @@ namespace DoublePendulumProject.UI.Modules
             // We find the list in the hierarchy
             Transform list = obj.transform.Find("List");
             // We set up all the controls
+            controls.Add("Play/Pause", list.Find("Space").gameObject);
             controls.Add("Edit", list.Find("E").gameObject);
             controls.Add("Add", list.Find("A").gameObject);
             controls.Add("Clone", list.Find("C").gameObject);
@@ -69,6 +62,7 @@ namespace DoublePendulumProject.UI.Modules
             controls.Add("Mass---", list.Find("Mass---").gameObject);
             controls.Add("FreeMove", list.Find("FreeMove").gameObject);
             //* WRITE MORE HERE (... if needed) !
+            Debug.LogFormat("Number of controls in the dictionary: {0}", controls.Count);
         }
 
         /// <summary>
@@ -95,18 +89,20 @@ namespace DoublePendulumProject.UI.Modules
         }
 
         public void OnPlay() {
-            // We concatenate all the strings into a well structured list
-            GameObject[] s = {
+            //* We only show the controls available during PLAY
+            foreach (KeyValuePair<string, GameObject> control in controls) { control.Value.SetActive(false); }
+            GameObject[] availableControls = {
                 controls["Play/Pause"],
                 controls["Info"],
                 controls["Menu"]
             };
-            field.text = CreateString(s);
+            foreach (GameObject availableControl in availableControls) { availableControl.SetActive(true); }
         }
 
         public void OnEdit() {
-            // We concatenate all the strings into a well structured list
-            GameObject[] s = {
+            //* We only show the controls available during EDIT
+            foreach (KeyValuePair<string, GameObject> control in controls) { control.Value.SetActive(false); }
+            GameObject[] availableControls = {
                 controls["Play/Pause"],
                 controls["Edit"],
                 controls["Add"],
@@ -114,12 +110,13 @@ namespace DoublePendulumProject.UI.Modules
                 controls["Info"],
                 controls["Menu"]
             };
-            field.text = CreateString(s);
+            foreach (GameObject availableControl in availableControls) { availableControl.SetActive(true); }
         }
 
         public void OnPause() {
-            // We concatenate all the strings into a well structured list
-            GameObject[] s = {
+            //* We only show the controls available during PAUSE
+            foreach (KeyValuePair<string, GameObject> control in controls) { control.Value.SetActive(false); }
+            GameObject[] availableControls = {
                 controls["Play/Pause"],
                 controls["Edit"],
                 controls["Add"],
@@ -134,18 +131,7 @@ namespace DoublePendulumProject.UI.Modules
                 controls["Mass---"],
                 controls["FreeMove"]
             };
-            field.text = CreateString(s);
-        }
-        
-        private string CreateString(params GameObject[] args) {
-            // We initialize an empty string
-            string s = string.Empty;
-            
-            foreach (GameObject arg in args) {
-                s += arg + "\n";
-            }
-
-            return s;
+            foreach (GameObject availableControl in availableControls) { availableControl.SetActive(true); }
         }
     }
 
