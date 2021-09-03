@@ -16,12 +16,13 @@ namespace DoublePendulumProject.UI.Modules
         /// <summary>
         /// The root game object associated with this UI element.
         /// </summary>
-        [Header("CORE")]
+        [HideInInspector]
         public GameObject obj;
 
         /// <summary>
         /// A list (Dictionary) of all the controls. Use controls["key"] to access the game object associated to that key (ex: controls["Add"] will give the GameObject)
         /// </summary>
+        [Header("CORE")]
         public Dictionary<string, GameObject> controls;
 
         #region UNITY METHODS
@@ -62,7 +63,6 @@ namespace DoublePendulumProject.UI.Modules
             controls.Add("Mass---", list.Find("Mass---").gameObject);
             controls.Add("FreeMove", list.Find("FreeMove").gameObject);
             //* WRITE MORE HERE (... if needed) !
-            Debug.LogFormat("Number of controls in the dictionary: {0}", controls.Count);
         }
 
         /// <summary>

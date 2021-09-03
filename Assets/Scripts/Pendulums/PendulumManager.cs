@@ -12,8 +12,8 @@ namespace DoublePendulumProject.Gameplay
     {
         [Header("DOUBLE PENDULUMS")]
         public List<GameObject> doublePendulums;
-        public GameObject selectedDoublePendulum; // Can only be != NULL during EDIT mode
-        private int selectedIndex;
+        public GameObject selectedDoublePendulum;
+        public int selectedIndex;
         [Space]
         public GameObject template;
 
@@ -42,7 +42,7 @@ namespace DoublePendulumProject.Gameplay
             if (doublePendulums.Count > 0) {
                 selectedDoublePendulum = doublePendulums[selectedIndex];
             } else {
-                Debug.LogError("Cannot select a pendulum from an empty list.");
+                AddNewPendulum();
             }
         }
 
@@ -90,12 +90,6 @@ namespace DoublePendulumProject.Gameplay
                 // We force Edit mode to stop
                 isEdit = false;
             }
-
-            // We check for info
-            if (UI.info.gameObject.activeSelf) {
-                DoublePendulum selected = selectedDoublePendulum.GetComponent<DoublePendulum>();
-                UI.info.UpdateInfo(selected);
-            }
         }
         #endregion
 
@@ -142,7 +136,6 @@ namespace DoublePendulumProject.Gameplay
                 doublePendulums.Add(instance);
                 // We change the name of the game object by changing its index
                 instance.name = string.Format("Double Pendulum {0}", doublePendulums.Count.ToString());
-                
                 
                 // We call the Create() method from the pendulum object
                 // (It will reset the pendulum values and setup a new associated tab for the UI)

@@ -11,11 +11,11 @@ namespace DoublePendulumProject.UI
     public class GameUI : MonoBehaviour
     {
         [Header("MODULES")]
-        public PlayStateUI playStateUI;
-        public ControlsUI controlsUI;
-        public InfoUI infoUI;
-        public MenuUI menuUI;
-        public TabsUI tabsUI;
+        private PlayStateUI playUI;
+        private ControlsUI ctrlUI;
+        private InfoUI infoUI;
+        private MenuUI menuUI;
+        private TabsUI tabsUI;
 
         #region UNITY METHODS
         private void Awake() {
@@ -26,7 +26,7 @@ namespace DoublePendulumProject.UI
         private void Update() {
             // H: HELP Panel
             if (Input.GetKeyDown(KeyCode.H)) {
-                controlsUI.obj.SetActive(!controlsUI.obj.activeSelf);
+                ctrlUI.obj.SetActive(!ctrlUI.obj.activeSelf);
             }
 
             // I: INFO Panel
@@ -43,16 +43,16 @@ namespace DoublePendulumProject.UI
 
         public void Init() {
             // We fetch the UI elements in the scene in case there are NULL
-            if (playStateUI == null) { playStateUI = this.transform.Find("_PlayStateUI").GetComponent<PlayStateUI>(); }
-            if (controlsUI == null) { controlsUI = this.transform.Find("_ControlsUI").GetComponent<ControlsUI>(); }
+            if (playUI == null) { playUI = this.transform.Find("_PlayStateUI").GetComponent<PlayStateUI>(); }
+            if (ctrlUI == null) { ctrlUI = this.transform.Find("_ControlsUI").GetComponent<ControlsUI>(); }
             if (infoUI == null) { infoUI = this.transform.Find("_InfoUI").GetComponent<InfoUI>(); }
             if (menuUI == null) { menuUI = this.transform.Find("_MenuUI").GetComponent<MenuUI>(); }
             if (tabsUI == null) { tabsUI = this.transform.Find("_TabsUI").GetComponent<TabsUI>(); }
         }
 
         public void OnStateSwitch() {
-            playStateUI.OnStateSwitch();
-            controlsUI.OnStateSwitch();
+            playUI.OnStateSwitch();
+            ctrlUI.OnStateSwitch();
             infoUI.OnStateSwitch();
             menuUI.OnStateSwitch();
             tabsUI.OnStateSwitch();

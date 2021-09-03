@@ -1,6 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 namespace DoublePendulumProject.UI.Modules
@@ -16,18 +16,13 @@ namespace DoublePendulumProject.UI.Modules
         /// <summary>
         /// The root game object associated with this UI element.
         /// </summary>
-        [Header("CORE")]
+        [HideInInspector]
         public GameObject obj;
 
         /// <summary>
-        /// Reference to the Pendulum Manager.
+        /// References to the pendulums labels (one for each set of fields).
         /// </summary>
-        private PendulumManager pendulumManager;
-
-        /// <summary>
-        /// Reference to the currently selected double pendulum.
-        /// </summary>
-        private DoublePendulum selectedDoublePendulum;
+        private Dictionary<string, InfoUILabel> labels;
 
         /// <summary>
         /// Reference to the PendulumA fields (TextMeshPro fields).
@@ -39,6 +34,11 @@ namespace DoublePendulumProject.UI.Modules
         /// </summary>
         private Dictionary<string, TextMeshProUGUI> fieldsB;
 
+        /// <summary>
+        /// Reference to the Pendulum Manager.
+        /// </summary>
+        private PendulumManager pendulumManager;
+
 
         #region INITIALIZATION
 
@@ -48,21 +48,26 @@ namespace DoublePendulumProject.UI.Modules
         public void Init() {
             // We check if the obj is NULL (in which case, we make sure we have a reference to the root object)
             if (obj == null) { obj = GameObject.Find("_INFO"); }
-
+            // We make sure we have the reference to the pendulum manager
             if (pendulumManager == null) { pendulumManager = GameObject.Find("_Managers").transform.Find("Pendulum Manager").GetComponent<PendulumManager>(); }
-            if (selectedDoublePendulum == null) { selectedDoublePendulum = pendulumManager.selectedDoublePendulum.GetComponent<DoublePendulum>(); }
 
-            // We define both dictionaries
+            // We define all the dictionaries
+            labels = new Dictionary<string, InfoUILabel>();
             fieldsA = new Dictionary<string, TextMeshProUGUI>();
             fieldsB = new Dictionary<string, TextMeshProUGUI>();
 
+
             Transform a = obj.transform.Find("Parameters A");
+            Transform labelA = a.Find("Label");
+            labels.Add("a", new InfoUILabel(labelA.GetComponentInChildren<TextMeshProUGUI>(), labelA.GetComponentInChildren<Image>()));
             fieldsA.Add("length", GetValue(a.Find("_Length")));
             fieldsA.Add("mass", GetValue(a.Find("_Mass")));
             fieldsA.Add("angle", GetValue(a.Find("_Angle")));
             fieldsA.Add("velocity", GetValue(a.Find("_Velocity")));
 
             Transform b = obj.transform.Find("Parameters B");
+            Transform labelB = b.Find("Label");
+            labels.Add("b", new InfoUILabel(labelB.GetComponentInChildren<TextMeshProUGUI>(), labelB.GetComponentInChildren<Image>()));
             fieldsB.Add("length", GetValue(b.Find("_Length")));
             fieldsB.Add("mass", GetValue(b.Find("_Mass")));
             fieldsB.Add("angle", GetValue(b.Find("_Angle")));
@@ -83,16 +88,24 @@ namespace DoublePendulumProject.UI.Modules
         }
 
         private void UpdateInfo() {
+            // We get a reference to the currently selected double pendulum
+            DoublePendulum dp = pendulumManager.selectedDoublePendulum.GetComponent<DoublePendulum>();
+
+            // Update labels
+            labels["a"].label.text = string.Format("[ Double Pendulum #{0} : Pendulum A ]", pendulumManager.selectedIndex);
+            labels["b"].label.text = string.Format("[ Double Pendulum #{0} : Pendulum B ]", pendulumManager.selectedIndex);
+            labels["a"].image.color = labels["b"].image.color = dp.color;
+
             // Update fields A fields
-            fieldsA["length"].text = selectedDoublePendulum.pendulumA.length.ToString();
-            fieldsA["mass"].text = selectedDoublePendulum.pendulumA.mass.ToString();
-            fieldsA["angle"].text = selectedDoublePendulum.pendulumA.angle.ToString();
-            fieldsA["velocity"].text = selectedDoublePendulum.pendulumA.velocity.ToString();
+            fieldsA["length"].text = dp.pendulumA.length.ToString();
+            fieldsA["mass"].text = dp.pendulumA.mass.ToString();
+            fieldsA["angle"].text = dp.pendulumA.angle.ToString();
+            fieldsA["velocity"].text = dp.pendulumA.velocity.ToString();
             // Update fields B fields
-            fieldsB["length"].text = selectedDoublePendulum.pendulumB.length.ToString();
-            fieldsB["mass"].text = selectedDoublePendulum.pendulumB.mass.ToString();
-            fieldsB["angle"].text = selectedDoublePendulum.pendulumB.angle.ToString();
-            fieldsB["velocity"].text = selectedDoublePendulum.pendulumB.velocity.ToString();
+            fieldsB["length"].text = dp.pendulumB.length.ToString();
+            fieldsB["mass"].text = dp.pendulumB.mass.ToString();
+            fieldsB["angle"].text = dp.pendulumB.angle.ToString();
+            fieldsB["velocity"].text = dp.pendulumB.velocity.ToString();
         }
 
         #endregion
@@ -103,11 +116,27 @@ namespace DoublePendulumProject.UI.Modules
         /// Define what is happening when the game state changes (INACTIVE => PAUSED/EDIT <=> PLAY)
         /// </summary>
         public void OnStateSwitch() {
-            
+            // We do something different for each game state
+            switch (GameManager.state) {
+                //* INACTIVE: Do nothing.
+                case GameState.INACTIVE: break;
+                //* PLAY: We switch to controls that can be used when the simulation is running
+                case GameState.PLAY:
+                    OnPlay();
+                    break;
+                //* EDIT: We switch to controls that can be used when the simulation is paused and in edit mode
+                case GameState.EDIT:
+                    OnEdit();
+                    break;
+                //* PAUSE: We switch to controls that can be used when the simulation is paused
+                case GameState.PAUSED:
+                    OnPause();
+                    break;
+            }
         }
 
         public void OnPlay() {
-
+            
         }
 
         public void OnEdit() {

@@ -18,7 +18,6 @@ namespace DoublePendulumProject.UI
 
         [Header("REFERENCES")]
         public PendulumManager manager;
-        public PendulumUIInfo info;
         public Transform tabsT;
         [Space]
         public Pendulum selectedSinglePendulum;
@@ -47,11 +46,9 @@ namespace DoublePendulumProject.UI
             //* <_____________
         }
 
-        private void Awake() {
+        private void Start() {
             // We initialize the UI
             Init();
-            // We hide all tabs at launch
-            DeactivateTabs();
         }
         #endregion
 

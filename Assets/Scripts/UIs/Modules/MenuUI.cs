@@ -15,7 +15,7 @@ namespace DoublePendulumProject.UI.Modules
         /// <summary>
         /// The root game object associated with this UI element.
         /// </summary>
-        [Header("CORE")]
+        [HideInInspector]
         public GameObject obj;
 
         #region UNITY METHODS

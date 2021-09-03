@@ -210,6 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dcf221834f4def4fb7b071440837914, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  color: {r: 0, g: 0, b: 0, a: 0}
   pendulumA: {fileID: 7745818231559398722}
   pendulumB: {fileID: 7745818231248051744}
   pendulumRenderer: {fileID: 242661942}

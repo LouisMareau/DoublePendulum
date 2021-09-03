@@ -61,11 +61,12 @@
      <Compile Include="Assets\DOTween\Modules\DOTweenModuleAudio.cs" />
      <Compile Include="Assets\Scripts\UIs\Modules\IModuleUI.cs" />
      <Compile Include="Assets\DOTween\Modules\DOTweenModulePhysics2D.cs" />
-     <Compile Include="Assets\Scripts\UIs\PendulumUIInfo.cs" />
      <Compile Include="Assets\Scripts\UIs\Modules\InfoUI.cs" />
      <Compile Include="Assets\Scripts\Pendulums\Pendulum.cs" />
      <Compile Include="Assets\Scripts\UIs\Modules\ControlMouseUI.cs" />
      <Compile Include="Assets\Scripts\UIs\Modules\ControlKeyUI.cs" />
+     <Compile Include="Assets\Scripts\UIs\Modules\InfoUILabel.cs" />
+     <Compile Include="Assets\Scripts\UIs\Modules\TabUI.cs" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
