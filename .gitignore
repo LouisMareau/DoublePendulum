@@ -1,8 +1,5 @@
 Library/
-Gifs/
-GUI/
 Logs/
 
 Unity*
-
-*.meta
+Temp/
